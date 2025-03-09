@@ -74,10 +74,10 @@ const Demo4: React.FC = () => {
 export const App = () => {
 	return (
 		<>
-			{/* <Demo1 url={URL} /> */}
+			<Demo1 url={URL} />
 			{/* <Demo2/> */}
 			{/* <Demo3 /> */}
-			<Demo4 />
+			{/* <Demo4 /> */}
 		</>
 	);
 };
