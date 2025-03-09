@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-interface IPosts {
+type IPosts = {
 	id: number;
 	title: string;
-}
+};
 
 export const useFetch = (initialUrl: string) => {
 	const [url, setUrl] = useState<string>(initialUrl);
@@ -35,8 +35,12 @@ export const useFetch = (initialUrl: string) => {
 		fetchData(url);
 	}, [url]);
 
-	const refetch = ({ params }) => {
-		const newUrl: string = `${initialUrl}?${new URLSearchParams(params).toString()}`;
+	type IrefetchProps = {
+		params: Record<string, string | number>;
+	};
+
+	const refetch = ({ params }: IrefetchProps) => {
+		const newUrl: string = `${initialUrl}?${new URLSearchParams(params as Record<string, string>).toString()}`;
 		setUrl(newUrl);
 	};
 

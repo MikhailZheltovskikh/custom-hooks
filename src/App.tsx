@@ -1,23 +1,27 @@
 import React from 'react';
-import { useFetch, useLocalStorage,  } from './hooks';
+import { useFetch, useLocalStorage } from './hooks';
 
 const URL: string = 'https://jsonplaceholder.typicode.com/posts';
 
-interface IDemoProps {
+type IDemoProps = {
 	url: string;
-}
+};
 
-interface IPosts {
+type IPosts = {
 	id: number;
 	title: string;
-}
+};
 
-interface IFetch {
+type Params = {
+	_limit: number;
+};
+
+type IFetch = {
 	data: IPosts[] | null;
 	isLoading: boolean;
 	error: string | undefined;
-	refetch: (params) => void;
-}
+	refetch: (params: { params: Params }) => void;
+};
 
 const Demo1: React.FC<IDemoProps> = ({ url }) => {
 	const { data, isLoading, error, refetch }: IFetch = useFetch(url);
@@ -46,25 +50,27 @@ const Demo1: React.FC<IDemoProps> = ({ url }) => {
 	);
 };
 
-const Demo2 = () => {
+const Demo2: React.FC = () => {
 	const [value, { setItem, removeItem }] = useLocalStorage('some-key');
 
 	return (
-	  <div>
-		<p>Значение из LocalStorage: {value}</p>
 		<div>
-		  <button onClick={() => setItem('new storage value')}>Задать значение</button>
-		  <button onClick={() => removeItem()}>Удалить значение</button>
+			<p>Значение из LocalStorage: {value}</p>
+			<div>
+				<button onClick={() => setItem('new storage value')}>
+					Задать значение
+				</button>
+				<button onClick={() => removeItem()}>Удалить значение</button>
+			</div>
 		</div>
-	  </div>
 	);
-  }
+};
 
 export const App = () => {
 	return (
 		<>
-			<Demo1 url={URL} />
-			<Demo2/>
+			{/* <Demo1 url={URL} /> */}
+			{/* <Demo2/> */}
 		</>
 	);
 };
