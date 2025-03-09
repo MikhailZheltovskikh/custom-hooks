@@ -1,10 +1,26 @@
 import React from 'react';
 import { useFetch, useLocalStorage,  } from './hooks';
 
-const URL = 'https://jsonplaceholder.typicode.com/posts';
+const URL: string = 'https://jsonplaceholder.typicode.com/posts';
 
-const Demo1 = ({ url }) => {
-	const { data, isLoading, error, refetch } = useFetch(url);
+interface IDemoProps {
+	url: string;
+}
+
+interface IPosts {
+	id: number;
+	title: string;
+}
+
+interface IFetch {
+	data: IPosts[] | null;
+	isLoading: boolean;
+	error: string | undefined;
+	refetch: (params) => void;
+}
+
+const Demo1: React.FC<IDemoProps> = ({ url }) => {
+	const { data, isLoading, error, refetch }: IFetch = useFetch(url);
 
 	return (
 		<div>
