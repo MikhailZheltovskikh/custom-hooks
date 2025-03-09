@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFetch, useLocalStorage } from './hooks';
+import { useFetch, useHover, useLocalStorage } from './hooks';
 
 const URL: string = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -66,11 +66,20 @@ const Demo2: React.FC = () => {
 	);
 };
 
+const Demo3: React.FC = () => {
+	const { hovered, ref } = useHover();
+
+	return (
+		<div ref={ref}>{hovered ? 'На меня навели мышку' : 'Наведи мышкой на меня'}</div>
+	);
+};
+
 export const App = () => {
 	return (
 		<>
 			{/* <Demo1 url={URL} /> */}
 			{/* <Demo2/> */}
+			<Demo3 />
 		</>
 	);
 };
