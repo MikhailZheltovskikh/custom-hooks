@@ -1,26 +1,14 @@
 import React from 'react';
-import { useFetch } from './hooks';
+import { useFetch, useHover, useLocalStorage, useViewportSize } from './hooks';
 
 const URL: string = 'https://jsonplaceholder.typicode.com/posts';
 
-interface IDemoProps {
+type IDemoProps = {
 	url: string;
-}
+};
 
-interface IPosts {
-	id: number;
-	title: string;
-}
-
-interface IFetch {
-	data: IPosts[] | null;
-	isLoading: boolean;
-	error: string | undefined;
-	refetch: (params) => void;
-}
-
-const Demo: React.FC<IDemoProps> = ({ url }) => {
-	const { data, isLoading, error, refetch }: IFetch = useFetch(url);
+const Demo1: React.FC<IDemoProps> = ({ url }) => {
+	const { data, isLoading, error, refetch } = useFetch(url);
 
 	return (
 		<div>
@@ -46,10 +34,50 @@ const Demo: React.FC<IDemoProps> = ({ url }) => {
 	);
 };
 
-export const App: React.FC = () => {
+const Demo2: React.FC = () => {
+	const [value, { setItem, removeItem }] = useLocalStorage('some-key');
+
+	return (
+		<div>
+			<p>Значение из LocalStorage: {value}</p>
+			<div>
+				<button onClick={() => setItem('new storage value')}>
+					Задать значение
+				</button>
+				<button onClick={() => removeItem()}>Удалить значение</button>
+			</div>
+		</div>
+	);
+};
+
+const Demo3: React.FC = () => {
+	const { hovered, ref } = useHover();
+
+	return (
+		<div ref={ref} style={{ cursor: `pointer` }}>
+			{hovered ? 'На меня навели мышку' : 'Наведи мышкой на меня'}
+		</div>
+	);
+};
+
+const Demo4: React.FC = () => {
+	const { height, width } = useViewportSize();
+
 	return (
 		<>
-			<Demo url={URL} />
+			<div>Width: {width}</div>
+			<div>Height: {height}</div>
+		</>
+	);
+};
+
+export const App = () => {
+	return (
+		<>
+			<Demo1 url={URL} />
+			{/* <Demo2/> */}
+			{/* <Demo3 /> */}
+			{/* <Demo4 /> */}
 		</>
 	);
 };
