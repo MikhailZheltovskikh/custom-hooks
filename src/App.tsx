@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFetch, useHover, useLocalStorage } from './hooks';
+import { useFetch, useHover, useLocalStorage, useViewportSize } from './hooks';
 
 const URL: string = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -7,24 +7,8 @@ type IDemoProps = {
 	url: string;
 };
 
-type IPosts = {
-	id: number;
-	title: string;
-};
-
-type Params = {
-	_limit: number;
-};
-
-type IFetch = {
-	data: IPosts[] | null;
-	isLoading: boolean;
-	error: string | undefined;
-	refetch: (params: { params: Params }) => void;
-};
-
 const Demo1: React.FC<IDemoProps> = ({ url }) => {
-	const { data, isLoading, error, refetch }: IFetch = useFetch(url);
+	const { data, isLoading, error, refetch } = useFetch(url);
 
 	return (
 		<div>
@@ -70,7 +54,20 @@ const Demo3: React.FC = () => {
 	const { hovered, ref } = useHover();
 
 	return (
-		<div ref={ref} style={{cursor: `pointer`}}>{hovered ? 'На меня навели мышку' : 'Наведи мышкой на меня'}</div>
+		<div ref={ref} style={{ cursor: `pointer` }}>
+			{hovered ? 'На меня навели мышку' : 'Наведи мышкой на меня'}
+		</div>
+	);
+};
+
+const Demo4: React.FC = () => {
+	const { height, width } = useViewportSize();
+
+	return (
+		<>
+			<div>Width: {width}</div>
+			<div>Height: {height}</div>
+		</>
 	);
 };
 
@@ -79,7 +76,8 @@ export const App = () => {
 		<>
 			{/* <Demo1 url={URL} /> */}
 			{/* <Demo2/> */}
-			<Demo3 />
+			{/* <Demo3 /> */}
+			<Demo4 />
 		</>
 	);
 };

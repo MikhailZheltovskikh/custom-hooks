@@ -5,6 +5,18 @@ type IPosts = {
 	title: string;
 };
 
+type Params = {
+	_limit: number;
+};
+
+type IFetch = {
+	data: IPosts[] | null;
+	isLoading: boolean;
+	error: string | undefined;
+	refetch: (params: { params: Params }) => void;
+};
+
+
 export const useFetch = (initialUrl: string) => {
 	const [url, setUrl] = useState<string>(initialUrl);
 	const [data, setData] = useState<IPosts[] | null>(null);
